@@ -1,0 +1,91 @@
+Respostas:
+1. Custo Médio dos Eventos
+
+Para calcular o custo médio de todos os eventos:
+
+SELECT AVG(CustoEvento) AS CustoMedioEventos FROM Evento;
+
+2.Consumo dos Convidados em um Evento Específico
+
+SELECT SUM(PrecoPed) AS TotalGastoConvidados 
+FROM Pedido 
+WHERE idEvento = :evento_id;
+
+3.Receita Mensal de Reservas de Mesas
+
+Para calcular a média mensal obtida com reservas de mesas, partindo da tabela Mesa onde PrecoMesa representa o valor de reserva e horario_Chegada contém a data:
+
+SELECT YEAR(horario_Chegada) AS Ano, MONTH(horario_Chegada) AS Mes, 
+       AVG(PrecoMesa) AS ReceitaMediaMensal
+FROM Mesa
+WHERE Reserva = TRUE
+GROUP BY YEAR(horario_Chegada), MONTH(horario_Chegada);
+
+4.Receita de Shows e Músicos em Eventos Específicos
+
+Para obter a receita total arrecadada com apresentações em um evento específico, considerando que Musico possui o campo cache:
+
+SELECT SUM(cache) AS ReceitaShows 
+FROM Musico 
+JOIN Evento ON Evento.idEvento = Musico.idEvento
+WHERE Evento.idEvento = :evento_id;
+
+5. Quem Sentará Perto de Quem?
+
+Para identificar quem sentará perto de quem em mesas específicas, considerando que há uma tabela de alocação que associa Convidado a Mesa:
+
+SELECT 
+    c1.Nome AS Convidado1, 
+    c2.Nome AS Convidado2, 
+    Mesa.IdMesa,
+    CASE 
+        WHEN c1.Nome IN ('Salsicha', 'Scooby-Doo') 
+             OR c2.Nome IN ('Salsicha', 'Scooby-Doo') 
+        THEN 'Alerta de comida! Salsicha e Scooby-Doo detectaram um buffet misterioso na mesa!'
+        ELSE NULL
+    END AS EasterEggMessage
+FROM Convidado AS c1 
+JOIN Convidado AS c2 ON c1.id_Convidado != c2.id_Convidado
+JOIN Mesa ON c1.id_Mesa = Mesa.IdMesa AND c2.id_Mesa = Mesa.IdMesa;
+
+
+6. Quem Pode Ter Alergia às Comidas?
+
+Para identificar quais convidados possuem alergia aos ingredientes das refeições, usando Convidado e Ingrediente, onde Convidado tem a coluna Alergias com ingredientes aos quais é alérgico:
+
+SELECT Convidado.Nome AS Convidado, Ingrediente.nomeIngrediente AS IngredienteAlérgico
+FROM Convidado 
+JOIN Ingrediente ON Convidado.Alergias LIKE CONCAT('%', Ingrediente.nomeIngrediente, '%');
+
+7. Número de Mesas Ocupadas
+
+Para contar o número de mesas que estão atualmente ocupadas, assumindo que Status indica se a mesa está ocupada:
+
+SELECT COUNT(*) AS MesasOcupadas 
+FROM Mesa 
+WHERE Status = 'ocupada';
+
+8. Número de Convidados para a Alocação
+
+Para contar o número de convidados em um evento específico:
+
+SELECT COUNT(*) AS TotalConvidados 
+FROM Convidado 
+WHERE idEvento = :evento_id;
+
+9. Horas de Show de uma Banda ou Músico
+
+Para calcular o total de horas de apresentação de uma banda ou músico, somando o tempo de show:
+
+SELECT SUM(TIME_TO_SEC(tempo_Show) / 3600) AS HorasTotaisShow 
+FROM Musico 
+WHERE NomeArtistico = :nome_musico;
+
+10. Frequência dos Pedidos
+
+Para verificar a frequência de cada pedido no histórico de pedidos:
+
+SELECT Ingredientes, COUNT(*) AS Frequencia 
+FROM Pedido 
+GROUP BY Ingredientes
+ORDER BY Frequencia DESC;
