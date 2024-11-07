@@ -1,0 +1,150 @@
+Modelo Conceitual:
+https://app.brmodeloweb.com/#!/publicview/672c66bc06f17b840e185767
+
+Modelo Logico:
+https://app.brmodeloweb.com/#!/publicview/672c633f06f17b840e185760
+
+DDL:
+CREATE TABLE Funcionario 
+( 
+ CodFuncionario INT PRIMARY KEY,  
+ Nome VARCHAR(100),  
+ Dt_Nascimento DATE,  
+ Endereco VARCHAR(200)
+);
+
+CREATE TABLE Medico 
+( 
+ CodFuncionario INT PRIMARY KEY, -- Medico é um tipo de Funcionario
+ CRM VARCHAR(20),
+ FOREIGN KEY (CodFuncionario) REFERENCES Funcionario(CodFuncionario)
+);
+
+CREATE TABLE Especialidade 
+( 
+ codEspecialidade INT PRIMARY KEY,  
+ nomeEspecialidade VARCHAR(50)
+);
+
+CREATE TABLE Cozinheiro 
+( 
+ CodFuncionario INT PRIMARY KEY, 
+ nivel VARCHAR(50),  
+ turno VARCHAR(20),
+ FOREIGN KEY (CodFuncionario) REFERENCES Funcionario(CodFuncionario)
+);
+
+CREATE TABLE Garcom 
+( 
+ CodFuncionario INT PRIMARY KEY,  
+ turno VARCHAR(20),  
+ nivel VARCHAR(50),
+ FOREIGN KEY (CodFuncionario) REFERENCES Funcionario(CodFuncionario)
+);
+
+CREATE TABLE Mesa 
+( 
+ IdMesa INT PRIMARY KEY,  
+ Local VARCHAR(50),  
+ PrecoMesa DECIMAL(10, 2),  
+ Reserva BOOLEAN,  
+ horario_Chegada TIME,  
+ Capacidade INT,  
+ Status VARCHAR(20)
+);
+
+CREATE TABLE Paciente 
+( 
+ Cpf CHAR(11) PRIMARY KEY,  
+ P_endereco VARCHAR(200),  
+ P_sexo CHAR(1),  
+ Alergias VARCHAR(200)
+);
+
+CREATE TABLE Medicamento 
+( 
+ codMedicamento INT PRIMARY KEY,  
+ descMedicamento VARCHAR(200)
+);
+
+CREATE TABLE Exame 
+( 
+ CodExame INT PRIMARY KEY,  
+ descExame VARCHAR(200)
+);
+
+CREATE TABLE Conveniado 
+( 
+ codConvenio INT PRIMARY KEY,  
+ nomeConvenio VARCHAR(100)
+);
+
+CREATE TABLE Particular 
+( 
+ CodFuncionario INT PRIMARY KEY,  
+ valorConsulta DECIMAL(10, 2),
+ FOREIGN KEY (CodFuncionario) REFERENCES Medico(CodFuncionario)
+);
+
+CREATE TABLE Convidado 
+( 
+ id_Convidado INT PRIMARY KEY,  
+ Nome VARCHAR(100),  
+ Data_Nascimento DATE,  
+ Celular CHAR(11)
+);
+
+CREATE TABLE Conv_noivo 
+( 
+ id_Convidado INT PRIMARY KEY,  
+ GrauParentesco VARCHAR(50),
+ FOREIGN KEY (id_Convidado) REFERENCES Convidado(id_Convidado)
+);
+
+CREATE TABLE Conv_noiva 
+( 
+ id_Convidado INT PRIMARY KEY,  
+ GrauParentesco VARCHAR(50),
+ FOREIGN KEY (id_Convidado) REFERENCES Convidado(id_Convidado)
+);
+
+CREATE TABLE Pedido 
+( 
+ idPedidos INT PRIMARY KEY,  
+ Ingredientes TEXT,  
+ PrecoPed DECIMAL(10, 2)
+);
+
+CREATE TABLE Evento 
+( 
+ idEvento INT PRIMARY KEY,  
+ nomeEvento VARCHAR(100),  
+ inicioEvento DATETIME,  
+ fimEvento DATETIME,  
+ CustoEvento DECIMAL(10, 2)
+);
+
+CREATE TABLE Local 
+( 
+ id_Local INT PRIMARY KEY,  
+ capacidade INT,  
+ endereco VARCHAR(200)
+);
+
+CREATE TABLE Musico 
+( 
+ idMusico INT PRIMARY KEY,
+ NomeArtistico VARCHAR(100),  
+ estilo VARCHAR(50),  
+ tempo_Show TIME,  
+ cache DECIMAL(10, 2),  
+ repertorio TEXT
+);
+
+CREATE TABLE Ingrediente 
+( 
+ codIngrediente INT PRIMARY KEY,  
+ quantidade DECIMAL(10, 2),  
+ nomeIngrediente VARCHAR(50),  
+ Alergenicos VARCHAR(200)
+);
