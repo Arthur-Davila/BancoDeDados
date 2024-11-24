@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.grupo.SolennitaStellare.entity.Func;
 import com.grupo.SolennitaStellare.service.FuncService;
-
+//"/func" é o que vai ter na url pra achar o local da controlador
+// http://localhost:8080/func
 @RestController
 @RequestMapping("/func")
 public class FuncController {
