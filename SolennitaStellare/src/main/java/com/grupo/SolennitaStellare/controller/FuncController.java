@@ -1,6 +1,7 @@
 package com.grupo.SolennitaStellare.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,26 @@ public class FuncController {
                 return ResponseEntity.notFound().build();
             }
 
+    }
+    @GetMapping
+    public ResponseEntity<List<Func>> listFunc(){
+        var list = funcService.listFunc();
+        return ResponseEntity.ok(list);
+    }
+    @PutMapping("/{funcId}")
+    public ResponseEntity<Void> updateFuncById(@PathVariable("funcId") String funcId,
+    @RequestBody UpdateFuncDto updateFuncDto){
+        
+        funcService.updateFuncById(funcId, updateFuncDto);
+        return ResponseEntity.noContent().build();
+   
+
+    }
+
+
+    @DeleteMapping("/{funcId}")
+    public ResponseEntity<Void> deleteById(@PathVariable("funcId") String funcId){
+        funcService.deleteById(funcId);
+        return ResponseEntity.noContent().build();
     }
 }
