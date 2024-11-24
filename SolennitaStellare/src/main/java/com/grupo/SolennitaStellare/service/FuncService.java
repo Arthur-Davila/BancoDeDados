@@ -1,6 +1,7 @@
 package com.grupo.SolennitaStellare.service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -32,4 +33,8 @@ public class FuncService {
              return  funcRepository.save(entity).getFuncId();
 
 }
+    public  Optional<Func> getFuncById(String FuncId){
+        var func = funcRepository.findById(UUID.fromString(FuncId));
+        return func;
+    }
 }

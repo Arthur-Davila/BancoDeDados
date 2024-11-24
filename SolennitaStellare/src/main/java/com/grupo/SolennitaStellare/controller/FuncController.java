@@ -23,8 +23,13 @@ public class FuncController {
     }
     @GetMapping("/{funcId}")
     public ResponseEntity<Func> getFuncById (@PathVariable("funcId") String funcId){
-            
-        return null;
+            var func = funcService.getFuncById(funcId);
+            if (func.isPresent()) {
+                return ResponseEntity.ok(func.get());
+            }
+            else{
+                return ResponseEntity.notFound().build();
+            }
 
     }
 }
