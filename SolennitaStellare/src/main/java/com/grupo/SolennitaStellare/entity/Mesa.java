@@ -1,6 +1,5 @@
 package com.grupo.SolennitaStellare.entity;
 
-
 import java.time.Instant;
 import java.util.UUID;
 
@@ -10,54 +9,58 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_Mesa")
+@Table(name = "tb_mesa") // Nome da tabela ajustado para snake_case
 public class Mesa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID MesaId;
+    @GeneratedValue(strategy = GenerationType.UUID) 
+    @Column(name = "id_mesa")// Nome da coluna ajustado
+    private UUID mesaId;
 
-    @Column(name = "Local da Mesa")
+    @Column(name = "local", nullable = false) // Nome da coluna ajustado
     private String local;
 
-    @Column(name = "Reserva")
+    @Column(name = "reserva", nullable = false)
     private Boolean reserva;
 
-    @Column(name = "Preço da Mesa")
+    @Column(name = "preco", nullable = false)
     private Double preco;
 
-    @Column(name = "Capacidade da Mesa")
+    @Column(name = "capacidade", nullable = false)
     private Integer capacidade;
 
-    @Column(name = "Status da Mesa")
+    @Column(name = "status", nullable = false)
     private String status;
-      @CreationTimestamp
-    private Instant creationTimeStamp;
-    
+
+    @CreationTimestamp
+    @Column(name = "creation_timestamp", updatable = false)
+    private Instant creationTimestamp;
+
     @UpdateTimestamp
-    private Instant updatedTimeStamp;
+    @Column(name = "updated_timestamp")
+    private Instant updatedTimestamp;
 
     public Mesa() {
     }
 
-    public Mesa(UUID MesaId, String local, Boolean reserva, Double preco, Integer capacidade,
-            String status, Instant creationTimeStamp, Instant updatedTimeStamp) {
-        this.MesaId = MesaId;
+    public Mesa(UUID mesaId, String local, Boolean reserva, Double preco, Integer capacidade,
+                String status, Instant creationTimestamp, Instant updatedTimestamp) {
+        this.mesaId = mesaId;
         this.local = local;
         this.reserva = reserva;
         this.preco = preco;
         this.capacidade = capacidade;
         this.status = status;
-        this.creationTimeStamp = creationTimeStamp;
-        this.updatedTimeStamp = updatedTimeStamp;
+        this.creationTimestamp = creationTimestamp;
+        this.updatedTimestamp = updatedTimestamp;
     }
 
     public UUID getMesaId() {
-        return MesaId;
+        return mesaId;
     }
 
-    public void setMesaId(UUID MesaId) {
-        this.MesaId = MesaId;
+    public void setMesaId(UUID mesaId) {
+        this.mesaId = mesaId;
     }
 
     public String getLocal() {
@@ -68,7 +71,7 @@ public class Mesa {
         this.local = local;
     }
 
-    public Boolean isReserva() {
+    public Boolean getReserva() {
         return reserva;
     }
 
@@ -100,20 +103,19 @@ public class Mesa {
         this.status = status;
     }
 
-    public Instant getCreationTimeStamp() {
-        return creationTimeStamp;
+    public Instant getCreationTimestamp() {
+        return creationTimestamp;
     }
 
-    public void setCreationTimeStamp(Instant creationTimeStamp) {
-        this.creationTimeStamp = creationTimeStamp;
+    public void setCreationTimestamp(Instant creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
     }
 
-    public Instant getUpdatedTimeStamp() {
-        return updatedTimeStamp;
+    public Instant getUpdatedTimestamp() {
+        return updatedTimestamp;
     }
 
-    public void setUpdatedTimeStamp(Instant updatedTimeStamp) {
-        this.updatedTimeStamp = updatedTimeStamp;
+    public void setUpdatedTimestamp(Instant updatedTimestamp) {
+        this.updatedTimestamp = updatedTimestamp;
     }
-    
 }

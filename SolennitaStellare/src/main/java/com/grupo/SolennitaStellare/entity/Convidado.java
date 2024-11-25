@@ -14,7 +14,7 @@ import jakarta.persistence.*;
 public class Convidado {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID convidadoId;
 
     @Column(name = "Nome do Convidado")
@@ -49,8 +49,8 @@ public class Convidado {
         return convidadoId;
     }
 
-    public void setConvidadoId(UUID id_Convidado) {
-        this.convidadoId = id_Convidado;
+    public void setConvidadoId(UUID convidadoId) {
+        this.convidadoId = convidadoId;
     }
 
     public String getNome() {
