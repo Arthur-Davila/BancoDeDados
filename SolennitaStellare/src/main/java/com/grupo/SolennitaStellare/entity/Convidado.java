@@ -1,5 +1,6 @@
 package com.grupo.SolennitaStellare.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.UUID;
@@ -7,7 +8,12 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_Convidado")
@@ -17,32 +23,36 @@ public class Convidado {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID convidadoId;
 
-    @Column(name = "Nome do Convidado")
+    @Column(name = "Nome do Convidado", nullable = false)
     private String nome;
 
-    @Column(name = "Data de Nascimento")
+    @Column(name = "Data de Nascimento", nullable = false)
     private Date data_nascimento;
 
-    @Column(name = "Contato do Convidado")
+    @Column(name = "Contato do Convidado", nullable = false)
     private String celular;
+
+    @Column(name = "Desconto do Convidado", precision = 5, scale = 2, nullable = false)
+    private BigDecimal desconto;
+
     @CreationTimestamp
     private Instant creationTimeStamp;
-    
+
     @UpdateTimestamp
     private Instant updatedTimeStamp;
 
     public Convidado() {
     }
 
-    public Convidado(UUID convidadoId, String nome, Date data_nascimento, String celular, Instant creationTimeStamp,
-            Instant updatedTimeStamp) {
+    public Convidado(UUID convidadoId, String nome, Date data_nascimento, String celular, BigDecimal desconto,
+                     Instant creationTimeStamp, Instant updatedTimeStamp) {
         this.convidadoId = convidadoId;
         this.nome = nome;
         this.data_nascimento = data_nascimento;
         this.celular = celular;
+        this.desconto = desconto;
         this.creationTimeStamp = creationTimeStamp;
         this.updatedTimeStamp = updatedTimeStamp;
-        
     }
 
     public UUID getConvidadoId() {
@@ -77,6 +87,14 @@ public class Convidado {
         this.celular = celular;
     }
 
+    public BigDecimal getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(BigDecimal desconto) {
+        this.desconto = desconto;
+    }
+
     public Instant getCreationTimeStamp() {
         return creationTimeStamp;
     }
@@ -92,5 +110,4 @@ public class Convidado {
     public void setUpdatedTimeStamp(Instant updatedTimeStamp) {
         this.updatedTimeStamp = updatedTimeStamp;
     }
-
 }

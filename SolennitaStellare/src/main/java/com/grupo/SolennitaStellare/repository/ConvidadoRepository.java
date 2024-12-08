@@ -10,5 +10,5 @@ import com.grupo.SolennitaStellare.entity.Convidado;
 
 @Repository
 public interface ConvidadoRepository extends JpaRepository<Convidado ,UUID>{
-
+     long count();
 }
